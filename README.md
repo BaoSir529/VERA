@@ -1,6 +1,6 @@
 
 <h1 align="center">
-LLM-based Knowledge Enhanced for Multimodal Aspect Based Sentiment Analysis
+CoRA: Cognitive Reasoning and Arbitration for Multimodal Aspect-Based Sentiment Analysis
 </h1>
 
 <p align="center">
@@ -13,7 +13,7 @@ LLM-based Knowledge Enhanced for Multimodal Aspect Based Sentiment Analysis
   <a href="#-Acknowledgements">💗Acknowledgements</a>
 </p>
 
-**Code and dataset for paper**: LLM-based Knowledge Enhancement and Sentiment Filter Network for Multimodal Aspect-Based Sentiment Analysis
+**Code and dataset for paper**: CoRA: Cognitive Reasoning and Arbitration for Multimodal Aspect-Based Sentiment Analysis
 
 ## ✨ Updates
 - 2025/7/27 Anonymize Git repository

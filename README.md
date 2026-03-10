@@ -16,7 +16,7 @@ CoRA: Cognitive Reasoning and Arbitration for Multimodal Aspect-Based Sentiment 
 **Code and dataset for paper**: CoRA: Cognitive Reasoning and Arbitration for Multimodal Aspect-Based Sentiment Analysis
 
 ## ✨ Updates
-- 2.26/3/10 Revise the paper and update the git.
+- 2026/3/10 Revise the paper and update the git.
 - 2026/1/26 Revise certain expressions in the paper.
 - 2025/7/27 Anonymize Git repository.
 - 2025/4/13 upload the dataset.

@@ -16,79 +16,123 @@ CoRA: Cognitive Reasoning and Arbitration for Multimodal Aspect-Based Sentiment 
 **Code and dataset for paper**: CoRA: Cognitive Reasoning and Arbitration for Multimodal Aspect-Based Sentiment Analysis
 
 ## ✨ Updates
+- 2.26/3/10 Revise the paper and update the git.
 - 2026/1/26 Revise certain expressions in the paper.
 - 2025/7/27 Anonymize Git repository.
-- 2025/7/25 update the code and  Twitter-V2.
 - 2025/4/13 upload the dataset.
 - 2025/4/11 create the git and add the README.
 
 ## 💡 Abstract
 
-Multimodal Aspect-Based Sentiment Analysis (MABSA), which aims to infer aspect-level sentiment from multimodal social media posts, has garnered significant attention in recent years. From the perspective of social media data composition, this paper identifies two fundamental challenges inherent in this field: modality heterogeneity and weak visual-textual sentiment correlation. On the one hand, due to distinct information-bearing mechanisms, text and images manifest sentiment cues inconsistently. Traditional approaches, which typically encode modalities independently before fusion, struggle to guide the model in learning truly complementary cross-modal sentiment features. On the other hand, the association between accompanying images and text is not consistently strong; visual content may be weakly related to the discussed aspect or even present contradictory sentiment. Unconstrained fusion of such visual information risks introducing noise and leading to erroneous sentiment attribution. To address these issues, we propose the Cognitive Reasoning and Arbitration framework (CoRA), designed to enhance model robustness and interpretability through explicit evidence construction and adaptive visual control. Specifically, to bridge the gap in sentiment expression between modalities, we design a Cognitive Reasoning (CR) agent. Leveraging a Multimodal Large Language Model (MLLM), the CR agent explicitly transcribes visual signals into verbalized cognitive evidence. This evidence is decoupled into context-agnostic content-aware evidence and context-dependent sentiment reasoning evidence, thereby mitigating modality heterogeneity and establishing semantic anchors for sentiment attribution. Furthermore, to facilitate the selective utilization of visual semantics, we propose a Visual Arbitration (VA) module. We employ knowledge distillation to transfer the image-text alignment capabilities of MLLMs into a lightweight visual arbitrator. The VA module learns the sentiment semantic consistency between modalities and outputs a sample-level arbitration coefficient. This coefficient dynamically regulates the intensity of visual evidence usage, effectively suppressing visual interference in weakly correlated samples. In the prediction phase, we adopt a BART-based encoder-decoder framework to unify the modeling of arbitrated visual features, the dual-path cognitive evidence, and the original text for final sentiment classification. Extensive experiments and ablation studies demonstrate that CoRA achieves consistent performance improvements on the Twitter2015 and Twitter2017 datasets. Additionally, we conduct feature-level interpretability analyses, visually elucidating the model's working mechanism when processing multimodal data.
+Multimodal Aspect-Based Sentiment Analysis (MABSA) aims to perform fine-grained sentiment inference by integrating textual and visual information from social media, and has become an important research direction in affective computing. However, existing methods remain limited in addressing two core challenges: modal heterogeneity and weak image–text correlation. On the one hand, text and images differ substantially in how sentiment is expressed, making it difficult for conventional cross-modal fusion strategies to effectively capture complementary affective cues. On the other hand, images and texts in social media often exhibit weak semantic correlation or even emotional divergence. Introducing visual information without discrimination can easily introduce noise and interfere with accurate sentiment attribution. To tackle these challenges, we proposes a Cognitive Reasoning and Arbitration framework (CoRA), which enhances robustness and interpretability through explicit evidence construction and visual information regulation. Specifically, we design a Cognitive Reasoning agent (CR) to bridge heterogeneous modal expressions. This agent leverages multimodal large language models to transform visual signals into linguistic cognitive evidence. The evidence is further decoupled into context-agnostic content-aware knowledge and context-dependent sentiment-aware knowledge. This design provides semantically aligned cross-modal representations for sentiment analysis. To enable selective integration of visual information, we introduce a Visual Arbitration module (VA). This module distills the image-text understanding capability of multimodal large language models to learn sample-level affective consistency. It generates dynamic arbitration coefficients to regulate the contribution of visual evidence, thereby effectively suppressing weakly related or noisy visual inputs. Experimental results on the Twitter2015 and Twitter2017 datasets demonstrate that the proposed method achieves significant improvements over baseline models. In addition, feature-level visualization further elucidates the model's decision mechanisms in multimodal sentiment reasoning, enhancing the interpretability of the proposed approach.
 
 ## 📦 Dataset
 
-In this paper, we reconstruct and publish the Twitter-V2. The main modifications are deleting incorrect aspect terms and sensitive data, adding missing aspect terms, and balancing the distribution of sentiment labels.
+We evaluate CoRA on two widely used Multimodal Aspect-Based Sentiment Analysis (MABSA) benchmarks: **Twitter2015** and **Twitter2017**. Following prior work, we report results on two subtasks:
 
-- 📚 Twitter-2015, Twitter-2017 and Twitter-V2 can be download from *Webdev* (Publication after review).
+- **JMASA**: Joint Multimodal Aspect-based Sentiment Analysis
+- **MASC**: Multimodal Aspect Sentiment Classification
 
-Table1. The data statistics of Twitter2015, Twitter2017 and Twitter-V2 as follows.
+We use the standard train/dev/test splits of the two datasets. The sentiment label distributions are shown below.
 
-|  Dateset  | Twitter2017 |         |         | Twitter2015 |         |         | Twitter-V2 |         |         |
-| :-------: | :---------: | :-----: | :-----: | :---------: | :-----: | :-----: | :--------: | :-----: | :-----: |
-|           |   **POS**   | **NEU** | **NEG** |   **POS**   | **NEU** | **NEG** |  **POS**   | **NEU** | **NEG** |
-| **Train** |    1508     |  1638   |   416   |     928     |  1883   |   368   |    3039    |  2673   |   952   |
-|  **Dev**  |     515     |   517   |   144   |     303     |   670   |   149   |    1013    |   891   |   317   |
-| **Test**  |     493     |   573   |   168   |     317     |   607   |   113   |    1013    |   891   |   319   |
-|  **All**  |    2516     |  2728   |   728   |    1548     |  3160   |   630   |    2516    |  2728   |   728   |
+### 📚 Data Statistics
 
-- 📊 To investigate the impact of data reconstruction on model representation learning, we perform t-SNE visualization on feature representations learned from both the original and modified datasets.
-
-Figute1. t-SNE distribution and sentiment label statistics.
-![Figure1. t-SNE distribution and sentiment label statistics](./utils/data_statistic.png)
+| Split | Twitter2017 POS | Twitter2017 NEU | Twitter2017 NEG | Twitter2015 POS | Twitter2015 NEU | Twitter2015 NEG |
+| :---: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+| Train | 1508 | 1638 | 416 | 928 | 1883 | 368 |
+| Dev   | 515  | 517  | 144 | 303 | 670  | 149 |
+| Test  | 493  | 573  | 168 | 317 | 607  | 113 |
+| All   | 2516 | 2728 | 728 | 1548 | 3160 | 630 |
 
 ## 📜 Results
 
-1. The main results of subtask ASPE as bellow.
+We report results on both **JMASA** and **MASC**. For JMASA, we use **Precision (P)**, **Recall (R)**, and **F1** as evaluation metrics. For MASC, we report **Accuracy (Acc.)** and **Macro-F1 (F1)**.  
+The best results are in **bold**, and the second-best results are <u>underlined</u>. Marker `*` indicates statistically significant improvement over **AoM** on F1 scores across 5 runs (`p < 0.05`).
 
-Table2. Main Results of ASPE. The best in bold and the second in underline.
+### 1. Main Results on JMASA
 
-| Models                  |             | Twitter2017 |             |             | Twitter2015 |             |             | TwitterV2   |             |
-| :---------------------- | :---------- | :---------- | :---------- | :---------- | :---------- | :---------- | :---------- | :---------- | :---------- |
-|                         | $P$         | $R$         | $F1$        | $P$         | $R$         | $F1$        | $P$         | $R$         | $F1$        |
-| SPAN(2019)              | 59.6        | 61.7        | 60.6        | 53.7        | 53.9        | 53.8        | 48.2        | 53.1        | 50.6        |
-| D-GCN(2020)             | 64.2        | 64.1        | 64.1        | 58.3        | 58.8        | 59.4        | 51.7        | 54.8        | 53.2        |
-| BART(2021)              | 65.2        | 65.6        | 65.4        | 62.9        | 65.0        | 63.9        | 58.7        | 60.1        | 59.4        |
-| DeepSeek-V3-70B†(2025)  | 27.9        | 33.1        | 30.3        | 26.7        | 41.5        | 32.5        | 17.4        | 30.2        | 22.1        |
-| Llava-34-B†(2023)       | 9.6         | 15.9        | 11.9        | 7.0         | 15.2        | 9.6         | 7.2         | 17.4        | 10.2        |
-| GPT-4o-mini‡(2024)      | 20.8        | 19.3        | 20.0        | 15.8        | 24.0        | 19.1        | 15.5        | 22.8        | 18.4        |
-| Llama-3.2-vision†(2024) | 21.4        | 23.5        | 22.4        | 11.9        | 15.3        | 13.4        | 13.0        | 20.3        | 15.9        |
-| JML(2021)               | 66.5        | 65.5        | 66.0        | 65.0        | 63.2        | 64.1        | 62.6        | 64.8        | 63.7        |
-| VLP-MABSA(2022)         | 66.9        | 69.2        | 68.0        | 65.1        | 68.3        | 66.6        | 63.7        | 64.1        | 63.9        |
-| CMMT(2022)              | 67.6        | 69.4        | 68.5        | 64.6        | 68.7        | 66.5        | 61.2        | 65.6        | 63.6        |
-| AoM(2023)               | 68.4        | 71.0        | 69.7        | 67.9        | 69.3        | 68.6        | <u>64.4</u> | <u>65.9</u> | <u>65.1</u> |
-| TCMT(2025)              | <u>70.2</u>        | <u>71.5</u>        | <u>70.8</u>        | **69.3** | <u>70.4</u>        | **69.8** | -           | -           | -           |
-| **LLM-KE**              | **72.0**    | **73.5**    | **72.7**    | <u>68.1</u>        | **70.8** | <u>69.4</u>        | **67.2**    | **67.8**    | **67.5**    |
+| Models | Twitter2017 P | Twitter2017 R | Twitter2017 F1 | Twitter2015 P | Twitter2015 R | Twitter2015 F1 |
+| :----- | :-----------: | :-----------: | :------------: | :-----------: | :-----------: | :------------: |
+| **Text-only models** |||||||
+| SPAN<sup>§</sup> (2019) | 59.6 | 61.7 | 60.6 | 53.7 | 53.9 | 53.8 |
+| D-GCN<sup>§</sup> (2020) | 64.2 | 64.1 | 64.1 | 58.3 | 58.8 | 59.4 |
+| BART<sup>§</sup> (2021) | 65.2 | 65.6 | 65.4 | 62.9 | 65.0 | 63.9 |
+| **Multimodal models** |||||||
+| JML<sup>§</sup> (2021) | 66.5 | 65.5 | 66.0 | 65.0 | 63.2 | 64.1 |
+| VLP<sup>§</sup> (2022) | 66.9 | 69.2 | 68.0 | 65.1 | 68.3 | 66.6 |
+| CMMT<sup>§</sup> (2022) | 67.6 | 69.4 | 68.5 | 64.6 | 68.7 | 66.5 |
+| AoM<sup>§</sup> (2023) | 68.4 | 71.0 | 69.7 | 67.9 | 69.3 | 68.6 |
+| MOCOLNet (2024) | 67.3 | 68.7 | 68.0 | 66.3 | 67.9 | 67.1 |
+| Atlantis (2024) | 68.6 | 70.3 | 69.4 | 65.6 | 69.2 | 67.3 |
+| TMFN (2024) | 70.6 | 71.2 | 70.9 | 68.4 | 69.6 | 69.0 |
+| TCMT (2025) | 70.2 | 71.5 | 70.8 | 69.3 | 70.4 | 69.8 |
+| CORSA (2025) | 70.1 | 71.0 | 70.6 | 69.0 | 70.8 | 69.9 |
+| DEQA (2025) | 71.4 | 72.4 | 71.9 | <u>71.4</u> | 73.9 | <u>72.7</u> |
+| DaNet (2025) | 71.3 | 72.9 | 72.1 | 70.8 | 71.5 | 71.2 |
+| AETS (2025) | **72.6** | **73.7** | **73.1** | 69.7 | **74.7** | 72.1 |
+| **CoRA (Ours)** | <u>72.0</u> | <u>73.5</u> | <u>72.7*</u> | **75.2** | <u>74.5</u> | **74.8*** |
 
-2. The main results of subtask MASC as bellow.
+> <sup>§</sup> denotes results reported in prior work. Unmarked results are from public or original implementations.
 
-Table3. Main Results of MASC. The best in bold and the second in underline.
+### 2. Comparison with LLMs on JMASA
 
-| Models                  | Twitter2017 |             | Twitter2015 |             | TwitterV2   |             |
-| :---------------------- | :---------- | :---------- | :---------- | :---------- | :---------- | :---------- |
-|                         | $ACC$       | $F1$        | $ACC$       | $F1$        | $ACC$       | $F1$        |
-| Deepseek-v3-70B†(2025)  | 62.7        | 53.8        | 67.3        | 53.1        | 63.1        | 53.9        |
-| Llava-34B†(2023)        | 18.7        | 15.8        | 13.9        | 12.6        | 19.7        | 13.6        |
-| GPT-4o-mini‡(2024)      | 56.2        | 54.1        | 52.4        | 53.3        | 67.1        | 64.0        |
-| Llama-3.2-vision†(2024) | 50.0        | 43.5        | 38.7        | 36.2        | 57.5        | 48.8        |
-| JML(2021)               | 72.7        | -           | 78.7        | -           | 63.1        | -           |
-| CMMT(2022)              | 73.8        | -           | 77.9        | -           | 66.3        | -           |
-| VLP-MABSA(2022)         | 73.8        | 71.8        | 78.6        | 73.8        | 65.3        | 65.2        |
-| AoM(2023)               | 76.4        | 75.0        | 80.2 | 75.9 | 69.3        | 67.7        |
-| Image2Text(2024)        | 74.5        | 73.1        | 79.5        | 75.1        | <u>70.4</u> | <u>69.9</u> |
-| DEQA(2025)              | <u>75.8</u> | <u>75.1</u> | **82.1**    | **77.6**    | -           | -           |
-| LLM-KE                  | **78.1**    | **76.8**    | <u>81.5</u>       | <u>76.3</u>        | **74.5**    | **75.1**    |
+| LLMs | Twitter2017 P | Twitter2017 R | Twitter2017 F1 | Twitter2015 P | Twitter2015 R | Twitter2015 F1 |
+| :--- | :-----------: | :-----------: | :------------: | :-----------: | :-----------: | :------------: |
+| **LLMs with text-only input** |||||||
+| LLaVA (34B)<sup>†</sup> | 9.6 | 15.9 | 11.9 | 7.0 | 15.2 | 9.6 |
+| DeepSeek-V3 (70B)<sup>†</sup> | 27.9 | 33.1 | 30.3 | 26.7 | 41.5 | 32.5 |
+| **LLMs with multimodal input** |||||||
+| Llama-3.2-Vision<sup>†</sup> | 21.4 | 23.5 | 22.4 | 11.9 | 15.3 | 13.4 |
+| Gemini-2.5-Pro<sup>‡</sup> | 30.6 | 18.8 | 23.3 | 28.3 | 24.1 | 26.0 |
+| GPT-4o-mini<sup>‡</sup> | 34.8 | 37.3 | 36.0 | 31.2 | 42.4 | 35.9 |
+| GPT-5<sup>‡</sup> | 29.9 | 42.2 | 35.0 | 25.0 | 45.8 | 32.3 |
+| **CoRA (Ours)** | **72.0** | **73.5** | **72.7** | **75.2** | **74.5** | **74.8** |
 
+> <sup>†</sup> indicates locally deployed results.  
+> <sup>‡</sup> indicates results from official APIs.
+
+### 3. Main Results on MASC
+
+| Models | Twitter2017 Acc. | Twitter2017 F1 | Twitter2015 Acc. | Twitter2015 F1 |
+| :----- | :--------------: | :------------: | :--------------: | :------------: |
+| JML (2021) | 72.7 | - | 78.7 | - |
+| CMMT (2022) | 73.8 | - | 77.9 | - |
+| VLP-MABSA (2022) | 73.8 | 71.8 | 78.6 | 73.8 |
+| AoM (2023) | 76.4 | 75.0 | 80.2 | 75.9 |
+| Atlantis (2024) | 74.2 | - | 79.3 | - |
+| Image2Text (2024) | 74.5 | 73.1 | 79.5 | 75.1 |
+| CORSA (2025) | 76.6 | 74.5 | 81.1 | 77.1 |
+| DEQA (2025) | 75.8 | 75.1 | <u>82.1</u> | 77.6 |
+| DaNet (2025) | **79.0** | <u>76.4</u> | 81.3 | 78.5 |
+| AETS (2025) | 76.6 | 75.2 | 79.5 | <u>80.8</u> |
+| **CoRA (Ours)** | <u>78.1</u> | **76.8*** | **82.3** | **81.2*** |
+
+### 4. Comparison with LLMs on MASC
+
+| LLMs | Twitter2017 Acc. | Twitter2017 F1 | Twitter2015 Acc. | Twitter2015 F1 |
+| :--- | :--------------: | :------------: | :--------------: | :------------: |
+| **LLMs with text-only input** |||||
+| LLaVA (34B)<sup>†</sup> | 18.7 | 15.8 | 13.9 | 12.6 |
+| DeepSeek-V3 (70B)<sup>†</sup> | 62.7 | 53.8 | 67.3 | 53.1 |
+| DeepSeek (32B)<sup>†</sup> | 62.4 | 61.3 | 71.6 | 62.4 |
+| Gemma3 (27B)<sup>†</sup> | 65.1 | 65.1 | 69.4 | 64.3 |
+| GPT-4o-mini<sup>‡</sup> | 71.6 | 64.4 | 61.9 | 60.6 |
+| Gemini-2.0-Flash<sup>‡</sup> | 71.6 | 62.4 | 64.8 | 63.5 |
+| Gemini-2.5-Pro<sup>‡</sup> | 72.1 | 63.8 | 65.2 | 61.7 |
+| **LLMs with multimodal input** |||||
+| Llama-3.2-Vision<sup>†</sup> | 50.0 | 43.5 | 38.7 | 36.2 |
+| Gemma3 (27B)<sup>†</sup> | 63.8 | 64.2 | 59.9 | 59.4 |
+| GPT-4o-mini<sup>‡</sup> | 61.1 | 61.1 | 59.5 | 59.1 |
+| Gemini-2.0-Flash<sup>‡</sup> | 66.0 | 67.0 | 64.0 | 62.5 |
+| Gemini-2.5-Pro<sup>‡</sup> | 66.9 | 67.4 | 66.6 | 63.8 |
+| **CoRA (Ours)** | **78.1** | **76.8** | **82.3** | **81.2** |
+
+> <sup>†</sup> indicates locally deployed results.  
+> <sup>‡</sup> indicates results from official APIs.
+
+### Summary
+
+CoRA achieves consistently strong performance across both subtasks and datasets. On **JMASA**, it obtains the **best F1 on Twitter2015 (74.8)** and highly competitive results on **Twitter2017 (72.7)**. On **MASC**, CoRA achieves the **best F1 on both Twitter2017 (76.8)** and **Twitter2015 (81.2)**, while also substantially outperforming general-purpose LLMs under both text-only and multimodal settings.
 
 ## 🔗 Codes
 
@@ -99,7 +143,6 @@ During the paper review stage, we have released the dataset and the core model c
 ## 🔑 License
 
 Distributed under the MIT License. See [MIT LICENSE](https://opensource.org/license/MIT) for more information.
-
 
 ## 💗 Acknowledgements
 

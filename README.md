@@ -1,6 +1,6 @@
 
 <h1 align="center">
-CoRA: Cognitive Reasoning and Arbitration for Multimodal Aspect-Based Sentiment Analysis
+VERA: Visual Evidence Reliability-Aware model for Multimodal Aspect-Based Sentiment Analysis
 </h1>
 
 <p align="center">
@@ -13,7 +13,7 @@ CoRA: Cognitive Reasoning and Arbitration for Multimodal Aspect-Based Sentiment 
   <a href="#-Acknowledgements">💗Acknowledgements</a>
 </p>
 
-**Code and dataset for paper**: CoRA: Cognitive Reasoning and Arbitration for Multimodal Aspect-Based Sentiment Analysis
+**Code and dataset for paper**: VERA: Visual Evidence Reliability-Aware model for Multimodal Aspect-Based Sentiment Analysis
 
 ## ✨ Updates
 - 2026/3/10 Revise the paper and update the git.
@@ -24,7 +24,7 @@ CoRA: Cognitive Reasoning and Arbitration for Multimodal Aspect-Based Sentiment 
 
 ## 💡 Abstract
 
-Multimodal Aspect-Based Sentiment Analysis (MABSA) aims to perform fine-grained sentiment inference by integrating textual and visual information from social media, and has become an important research direction in affective computing. However, existing methods remain limited in addressing two core challenges: modal heterogeneity and weak image–text correlation. On the one hand, text and images differ substantially in how sentiment is expressed, making it difficult for conventional cross-modal fusion strategies to effectively capture complementary affective cues. On the other hand, images and texts in social media often exhibit weak semantic correlation or even emotional divergence. Introducing visual information without discrimination can easily introduce noise and interfere with accurate sentiment attribution. To tackle these challenges, we proposes a Cognitive Reasoning and Arbitration framework (CoRA), which enhances robustness and interpretability through explicit evidence construction and visual information regulation. Specifically, we design a Cognitive Reasoning agent (CR) to bridge heterogeneous modal expressions. This agent leverages multimodal large language models to transform visual signals into linguistic cognitive evidence. The evidence is further decoupled into context-agnostic content-aware knowledge and context-dependent sentiment-aware knowledge. This design provides semantically aligned cross-modal representations for sentiment analysis. To enable selective integration of visual information, we introduce a Visual Arbitration module (VA). This module distills the image-text understanding capability of multimodal large language models to learn sample-level affective consistency. It generates dynamic arbitration coefficients to regulate the contribution of visual evidence, thereby effectively suppressing weakly related or noisy visual inputs. Experimental results on the Twitter2015 and Twitter2017 datasets demonstrate that the proposed method achieves significant improvements over baseline models. In addition, feature-level visualization further elucidates the model's decision mechanisms in multimodal sentiment reasoning, enhancing the interpretability of the proposed approach.
+Multimodal Aspect-Based Sentiment Analysis (MABSA) aims to perform fine-grained sentiment inference from social media posts containing both text and images. In social media scenarios, images mainly reflect the overall topic of a post, but may provide limited or unreliable evidence for aspect-level sentiment. This challenge is further complicated by the fact that visual and textual modalities express sentiment in different ways, making multimodal features harder to exploit effectively at the aspect level. To address these combined challenges, we propose the Visual Evidence Reliability-Aware model (VERA), which improves multimodal sentiment reasoning through explicit visual evidence construction and reliability-aware visual regulation. Specifically, VERA first leverages multimodal large language models to convert visual inputs into explicit textual evidence, making visual cues more accessible for downstream sentiment inference. It then adaptively regulates the visual contribution according to the reliability of the generated evidence for the target aspect. In this way, VERA reduces interference from images that are only weakly associated with the target or provide unreliable sentiment cues. Experimental results on benchmark datasets show that our model outperforms strong baselines, while visualizations confirm its ability to establish reliable and interpretable semantic anchors.
 
 ## 📦 Dataset
 

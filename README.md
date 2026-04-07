@@ -28,7 +28,7 @@ Multimodal Aspect-Based Sentiment Analysis (MABSA) aims to perform fine-grained 
 
 ## 📦 Dataset
 
-We evaluate CoRA on two widely used Multimodal Aspect-Based Sentiment Analysis (MABSA) benchmarks: **Twitter2015** and **Twitter2017**. Following prior work, we report results on two subtasks:
+We evaluate VERA on two widely used Multimodal Aspect-Based Sentiment Analysis (MABSA) benchmarks: **Twitter2015** and **Twitter2017**. Following prior work, we report results on two subtasks:
 
 - **JMASA**: Joint Multimodal Aspect-based Sentiment Analysis
 - **MASC**: Multimodal Aspect Sentiment Classification
@@ -70,7 +70,7 @@ The best results are in **bold**, and the second-best results are <u>underlined<
 | DEQA (2025) | 71.4 | 72.4 | 71.9 | <u>71.4</u> | 73.9 | <u>72.7</u> |
 | DaNet (2025) | 71.3 | 72.9 | 72.1 | 70.8 | 71.5 | 71.2 |
 | AETS (2025) | **72.6** | **73.7** | **73.1** | 69.7 | **74.7** | 72.1 |
-| **CoRA (Ours)** | <u>72.0</u> | <u>73.5</u> | <u>72.7*</u> | **75.2** | <u>74.5</u> | **74.8*** |
+| **VERA (Ours)** | <u>72.0</u> | <u>73.5</u> | <u>72.7*</u> | **75.2** | <u>74.5</u> | **74.8*** |
 
 > <sup>§</sup> denotes results reported in prior work. Unmarked results are from public or original implementations.
 
@@ -86,7 +86,7 @@ The best results are in **bold**, and the second-best results are <u>underlined<
 | Gemini-2.5-Pro<sup>‡</sup> | 30.6 | 18.8 | 23.3 | 28.3 | 24.1 | 26.0 |
 | GPT-4o-mini<sup>‡</sup> | 34.8 | 37.3 | 36.0 | 31.2 | 42.4 | 35.9 |
 | GPT-5<sup>‡</sup> | 29.9 | 42.2 | 35.0 | 25.0 | 45.8 | 32.3 |
-| **CoRA (Ours)** | **72.0** | **73.5** | **72.7** | **75.2** | **74.5** | **74.8** |
+| **VERA (Ours)** | **72.0** | **73.5** | **72.7** | **75.2** | **74.5** | **74.8** |
 
 > <sup>†</sup> indicates locally deployed results.  
 > <sup>‡</sup> indicates results from official APIs.
@@ -105,7 +105,7 @@ The best results are in **bold**, and the second-best results are <u>underlined<
 | DEQA (2025) | 75.8 | 75.1 | <u>82.1</u> | 77.6 |
 | DaNet (2025) | **79.0** | <u>76.4</u> | 81.3 | 78.5 |
 | AETS (2025) | 76.6 | 75.2 | 79.5 | <u>80.8</u> |
-| **CoRA (Ours)** | <u>78.1</u> | **76.8*** | **82.3** | **81.2*** |
+| **VERA (Ours)** | <u>78.1</u> | **76.8*** | **82.3** | **81.2*** |
 
 ### 4. Comparison with LLMs on MASC
 
@@ -125,14 +125,14 @@ The best results are in **bold**, and the second-best results are <u>underlined<
 | GPT-4o-mini<sup>‡</sup> | 61.1 | 61.1 | 59.5 | 59.1 |
 | Gemini-2.0-Flash<sup>‡</sup> | 66.0 | 67.0 | 64.0 | 62.5 |
 | Gemini-2.5-Pro<sup>‡</sup> | 66.9 | 67.4 | 66.6 | 63.8 |
-| **CoRA (Ours)** | **78.1** | **76.8** | **82.3** | **81.2** |
+| **VERA (Ours)** | **78.1** | **76.8** | **82.3** | **81.2** |
 
 > <sup>†</sup> indicates locally deployed results.  
 > <sup>‡</sup> indicates results from official APIs.
 
 ### Summary
 
-CoRA achieves consistently strong performance across both subtasks and datasets. On **JMASA**, it obtains the **best F1 on Twitter2015 (74.8)** and highly competitive results on **Twitter2017 (72.7)**. On **MASC**, CoRA achieves the **best F1 on both Twitter2017 (76.8)** and **Twitter2015 (81.2)**, while also substantially outperforming general-purpose LLMs under both text-only and multimodal settings.
+VERA achieves consistently strong performance across both subtasks and datasets. On **JMASA**, it obtains the **best F1 on Twitter2015 (74.8)** and highly competitive results on **Twitter2017 (72.7)**. On **MASC**, VERA achieves the **best F1 on both Twitter2017 (76.8)** and **Twitter2015 (81.2)**, while also substantially outperforming general-purpose LLMs under both text-only and multimodal settings.
 
 ## 🔗 Codes
 

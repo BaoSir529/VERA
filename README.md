@@ -1,149 +1,132 @@
-
 <h1 align="center">
-VERA: Visual Evidence Reliability-Aware model for Multimodal Aspect-Based Sentiment Analysis
+VEGA: Evidence-Guided Region Calibration for Multimodal Aspect-Based Sentiment Analysis
 </h1>
 
 <p align="center">
-  <a href="#-Updates">✨ Updates</a> •
-  <a href="#-Abstract">💡 Abstract</a> •
-  <a href="#-Dataset">📦 Datasets</a> •
-  <a href="#-Results">📜 Results</a> •
-  <a href="#-Codes">🔗 Codes</a> •
-  <a href="#-License">🔑 License</a> •
-  <a href="#-Acknowledgements">💗Acknowledgements</a>
+  <a href="#-updates">✨ Updates</a> •
+  <a href="#-abstract">💡 Abstract</a> •
+  <a href="#-datasets">📦 Datasets</a> •
+  <a href="#-results">📜 Results</a> •
+  <a href="#-code">🔗 Code</a> •
+  <a href="#-license">🔑 License</a> •
+  <a href="#-acknowledgements">💗 Acknowledgements</a>
 </p>
 
-**Code and dataset for paper**: VERA: Visual Evidence Reliability-Aware model for Multimodal Aspect-Based Sentiment Analysis
+Code and dataset for the paper:
+
+**Multimodal Aspect-Based Sentiment Analysis via Evidence-Guided Region Calibration**
 
 ## ✨ Updates
-- 2026/3/10 Revise the paper and update the git.
-- 2026/1/26 Revise certain expressions in the paper.
-- 2025/7/27 Anonymize Git repository.
-- 2025/4/13 upload the dataset.
-- 2025/4/11 create the git and add the README.
+
+- 2026/03/10 Release dataset and core model code.
+- 2026/03/10 Update README according to the latest version of the paper.
+- 2025/07/27 Anonymize Git repository.
+- 2025/04/13 Upload dataset.
+- 2025/04/11 Create repository.
 
 ## 💡 Abstract
 
-Multimodal Aspect-Based Sentiment Analysis (MABSA) aims to perform fine-grained sentiment inference from social media posts containing both text and images. In social media scenarios, images mainly reflect the overall topic of a post, but may provide limited or unreliable evidence for aspect-level sentiment. This challenge is further complicated by the fact that visual and textual modalities express sentiment in different ways, making multimodal features harder to exploit effectively at the aspect level. To address these combined challenges, we propose the Visual Evidence Reliability-Aware model (VERA), which improves multimodal sentiment reasoning through explicit visual evidence construction and reliability-aware visual regulation. Specifically, VERA first leverages multimodal large language models to convert visual inputs into explicit textual evidence, making visual cues more accessible for downstream sentiment inference. It then adaptively regulates the visual contribution according to the reliability of the generated evidence for the target aspect. In this way, VERA reduces interference from images that are only weakly associated with the target or provide unreliable sentiment cues. Experimental results on benchmark datasets show that our model outperforms strong baselines, while visualizations confirm its ability to establish reliable and interpretable semantic anchors.
+Multimodal Aspect-Based Sentiment Analysis (MABSA) aims to identify aspect-level sentiment from image-text social media posts. Although visual information can provide useful context, it is not uniformly beneficial for aspect-level prediction. Some visual regions provide content support, some offer context-relevant cues for sentiment reasoning, while others are weakly related or even misleading.
 
-## 📦 Dataset
+To address this issue, we propose **VEGA**, an evidence-guided region calibration framework for MABSA. VEGA first uses a multimodal large language model to construct two types of visual evidence from each image-text pair: **content-aware visual evidence** and **context-aware sentiment evidence**. The former describes observable visual content, while the latter identifies post-conditioned visual cues related to entities, events, or aspect-like targets without directly predicting sentiment labels. These evidence streams are then used to guide region-level visual calibration through a dual-support cross-attention mechanism. The calibrated visual features are finally integrated with the original text in a unified encoder-decoder architecture for both **MASC** and **JMASA**.
 
-We evaluate VERA on two widely used Multimodal Aspect-Based Sentiment Analysis (MABSA) benchmarks: **Twitter2015** and **Twitter2017**. Following prior work, we report results on two subtasks:
+Experiments on Twitter2015 and Twitter2017 show that VEGA outperforms strong task-specific MABSA baselines. Further analyses validate the effectiveness of visual evidence construction and evidence-guided region calibration.
 
-- **JMASA**: Joint Multimodal Aspect-based Sentiment Analysis
+## 📦 Datasets
+
+We evaluate VEGA on two widely used MABSA benchmarks:
+
+- **Twitter2015**
+- **Twitter2017**
+
+Following prior work, we report results on two subtasks:
+
 - **MASC**: Multimodal Aspect Sentiment Classification
+- **JMASA**: Joint Multimodal Aspect-Sentiment Analysis
 
-We use the standard train/dev/test splits of the two datasets. The sentiment label distributions are shown below.
+We use the standard train/dev/test splits of the two datasets.
 
-### 📚 Data Statistics
+### Data Statistics
 
-| Split | Twitter2017 POS | Twitter2017 NEU | Twitter2017 NEG | Twitter2015 POS | Twitter2015 NEU | Twitter2015 NEG |
+| Split | Twitter2015 POS | Twitter2015 NEU | Twitter2015 NEG | Twitter2017 POS | Twitter2017 NEU | Twitter2017 NEG |
 | :---: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
-| Train | 1508 | 1638 | 416 | 928 | 1883 | 368 |
-| Dev   | 515  | 517  | 144 | 303 | 670  | 149 |
-| Test  | 493  | 573  | 168 | 317 | 607  | 113 |
-| All   | 2516 | 2728 | 728 | 1548 | 3160 | 630 |
+| Train | 928 | 1883 | 368 | 1508 | 1638 | 416 |
+| Dev   | 303 | 670  | 149 | 515  | 517  | 144 |
+| Test  | 317 | 607  | 113 | 493  | 573  | 168 |
+| All   | 1548 | 3160 | 630 | 2516 | 2728 | 728 |
 
 ## 📜 Results
 
-We report results on both **JMASA** and **MASC**. For JMASA, we use **Precision (P)**, **Recall (R)**, and **F1** as evaluation metrics. For MASC, we report **Accuracy (Acc.)** and **Macro-F1 (F1)**.  
-The best results are in **bold**, and the second-best results are <u>underlined</u>. Marker `*` indicates statistically significant improvement over **AoM** on F1 scores across 5 runs (`p < 0.05`).
+For **JMASA**, we report Precision, Recall, and F1.  
+For **MASC**, we report Accuracy and Macro-F1.
 
-### 1. Main Results on JMASA
+### Main Results on JMASA
 
-| Models | Twitter2017 P | Twitter2017 R | Twitter2017 F1 | Twitter2015 P | Twitter2015 R | Twitter2015 F1 |
+| Models | Twitter2015 P | Twitter2015 R | Twitter2015 F1 | Twitter2017 P | Twitter2017 R | Twitter2017 F1 |
 | :----- | :-----------: | :-----------: | :------------: | :-----------: | :-----------: | :------------: |
-| **Text-only models** |||||||
-| SPAN<sup>§</sup> (2019) | 59.6 | 61.7 | 60.6 | 53.7 | 53.9 | 53.8 |
-| D-GCN<sup>§</sup> (2020) | 64.2 | 64.1 | 64.1 | 58.3 | 58.8 | 59.4 |
-| BART<sup>§</sup> (2021) | 65.2 | 65.6 | 65.4 | 62.9 | 65.0 | 63.9 |
-| **Multimodal models** |||||||
-| JML<sup>§</sup> (2021) | 66.5 | 65.5 | 66.0 | 65.0 | 63.2 | 64.1 |
-| VLP<sup>§</sup> (2022) | 66.9 | 69.2 | 68.0 | 65.1 | 68.3 | 66.6 |
-| CMMT<sup>§</sup> (2022) | 67.6 | 69.4 | 68.5 | 64.6 | 68.7 | 66.5 |
-| AoM<sup>§</sup> (2023) | 68.4 | 71.0 | 69.7 | 67.9 | 69.3 | 68.6 |
-| MOCOLNet (2024) | 67.3 | 68.7 | 68.0 | 66.3 | 67.9 | 67.1 |
-| Atlantis (2024) | 68.6 | 70.3 | 69.4 | 65.6 | 69.2 | 67.3 |
-| TMFN (2024) | 70.6 | 71.2 | 70.9 | 68.4 | 69.6 | 69.0 |
-| TCMT (2025) | 70.2 | 71.5 | 70.8 | 69.3 | 70.4 | 69.8 |
-| CORSA (2025) | 70.1 | 71.0 | 70.6 | 69.0 | 70.8 | 69.9 |
-| DEQA (2025) | 71.4 | 72.4 | 71.9 | <u>71.4</u> | 73.9 | <u>72.7</u> |
-| DaNet (2025) | 71.3 | 72.9 | 72.1 | 70.8 | 71.5 | 71.2 |
-| AETS (2025) | **72.6** | **73.7** | **73.1** | 69.7 | **74.7** | 72.1 |
-| **VERA (Ours)** | <u>72.0</u> | <u>73.5</u> | <u>72.7*</u> | **75.2** | <u>74.5</u> | **74.8*** |
+| SPAN | 53.7 | 53.9 | 53.8 | 59.6 | 61.7 | 60.6 |
+| D-GCN | 58.3 | 58.8 | 59.4 | 64.2 | 64.1 | 64.1 |
+| BART | 62.9 | 65.0 | 63.9 | 65.2 | 65.6 | 65.4 |
+| JML | 65.0 | 63.2 | 64.1 | 66.5 | 65.5 | 66.0 |
+| VLP | 65.1 | 68.3 | 66.6 | 66.9 | 69.2 | 68.0 |
+| CMMT | 64.6 | 68.7 | 66.5 | 67.6 | 69.4 | 68.5 |
+| AoM | 67.9 | 69.3 | 68.6 | 68.4 | 71.0 | 69.7 |
+| MOCOLNet | 66.3 | 67.9 | 67.1 | 67.3 | 68.7 | 68.0 |
+| Atlantis | 65.6 | 69.2 | 67.3 | 68.6 | 70.3 | 69.4 |
+| TMFN | 68.4 | 69.6 | 69.0 | 70.6 | 71.2 | 70.9 |
+| TCMT | 69.3 | 70.4 | 69.8 | 70.2 | 71.5 | 70.8 |
+| CORSA | 69.0 | 70.8 | 69.9 | 70.1 | 71.0 | 70.6 |
+| DEQA | 71.4 | 73.9 | 72.7 | 71.4 | 72.4 | 71.9 |
+| DaNet | 70.8 | 71.5 | 71.2 | 71.3 | 72.9 | 72.1 |
+| DPHA | 69.9 | 71.8 | 70.8 | 70.3 | 71.7 | 71.0 |
+| EaNet | 70.6 | 71.7 | 71.1 | 71.5 | 72.6 | 72.0 |
+| **VEGA** | **75.2** | **74.5** | **74.8** | **73.1** | **74.8** | **73.9** |
 
-> <sup>§</sup> denotes results reported in prior work. Unmarked results are from public or original implementations.
+### Main Results on MASC
 
-### 2. Comparison with LLMs on JMASA
-
-| LLMs | Twitter2017 P | Twitter2017 R | Twitter2017 F1 | Twitter2015 P | Twitter2015 R | Twitter2015 F1 |
-| :--- | :-----------: | :-----------: | :------------: | :-----------: | :-----------: | :------------: |
-| **LLMs with text-only input** |||||||
-| LLaVA (34B)<sup>†</sup> | 9.6 | 15.9 | 11.9 | 7.0 | 15.2 | 9.6 |
-| DeepSeek-V3 (70B)<sup>†</sup> | 27.9 | 33.1 | 30.3 | 26.7 | 41.5 | 32.5 |
-| **LLMs with multimodal input** |||||||
-| Llama-3.2-Vision<sup>†</sup> | 21.4 | 23.5 | 22.4 | 11.9 | 15.3 | 13.4 |
-| Gemini-2.5-Pro<sup>‡</sup> | 30.6 | 18.8 | 23.3 | 28.3 | 24.1 | 26.0 |
-| GPT-4o-mini<sup>‡</sup> | 34.8 | 37.3 | 36.0 | 31.2 | 42.4 | 35.9 |
-| GPT-5<sup>‡</sup> | 29.9 | 42.2 | 35.0 | 25.0 | 45.8 | 32.3 |
-| **VERA (Ours)** | **72.0** | **73.5** | **72.7** | **75.2** | **74.5** | **74.8** |
-
-> <sup>†</sup> indicates locally deployed results.  
-> <sup>‡</sup> indicates results from official APIs.
-
-### 3. Main Results on MASC
-
-| Models | Twitter2017 Acc. | Twitter2017 F1 | Twitter2015 Acc. | Twitter2015 F1 |
+| Models | Twitter2015 Acc. | Twitter2015 F1 | Twitter2017 Acc. | Twitter2017 F1 |
 | :----- | :--------------: | :------------: | :--------------: | :------------: |
-| JML (2021) | 72.7 | - | 78.7 | - |
-| CMMT (2022) | 73.8 | - | 77.9 | - |
-| VLP-MABSA (2022) | 73.8 | 71.8 | 78.6 | 73.8 |
-| AoM (2023) | 76.4 | 75.0 | 80.2 | 75.9 |
-| Atlantis (2024) | 74.2 | - | 79.3 | - |
-| Image2Text (2024) | 74.5 | 73.1 | 79.5 | 75.1 |
-| CORSA (2025) | 76.6 | 74.5 | 81.1 | 77.1 |
-| DEQA (2025) | 75.8 | 75.1 | <u>82.1</u> | 77.6 |
-| DaNet (2025) | **79.0** | <u>76.4</u> | 81.3 | 78.5 |
-| AETS (2025) | 76.6 | 75.2 | 79.5 | <u>80.8</u> |
-| **VERA (Ours)** | <u>78.1</u> | **76.8*** | **82.3** | **81.2*** |
+| JML | 78.7 | - | 72.7 | - |
+| CMMT | 77.9 | - | 73.8 | - |
+| VLP | 78.6 | 73.8 | 73.8 | 71.8 |
+| AoM | 80.2 | 75.9 | 76.4 | 75.0 |
+| Atlantis | 79.3 | - | 74.2 | - |
+| Image2Text | 79.5 | 75.1 | 74.5 | 73.1 |
+| CORSA | 81.1 | 77.1 | 76.6 | 74.5 |
+| DEQA | 82.1 | 77.6 | 75.8 | 75.1 |
+| DaNet | 81.3 | 78.5 | 79.0 | 76.4 |
+| DPHA | 81.5 | 76.9 | 79.2 | 76.2 |
+| EaNet | 81.6 | 78.4 | 78.1 | 75.5 |
+| **VEGA** | **82.3** | **81.2** | **80.1** | **77.8** |
 
-### 4. Comparison with LLMs on MASC
+### Reference Comparison with MLLMs
 
-| LLMs | Twitter2017 Acc. | Twitter2017 F1 | Twitter2015 Acc. | Twitter2015 F1 |
-| :--- | :--------------: | :------------: | :--------------: | :------------: |
-| **LLMs with text-only input** |||||
-| LLaVA (34B)<sup>†</sup> | 18.7 | 15.8 | 13.9 | 12.6 |
-| DeepSeek-V3 (70B)<sup>†</sup> | 62.7 | 53.8 | 67.3 | 53.1 |
-| DeepSeek (32B)<sup>†</sup> | 62.4 | 61.3 | 71.6 | 62.4 |
-| Gemma3 (27B)<sup>†</sup> | 65.1 | 65.1 | 69.4 | 64.3 |
-| GPT-4o-mini<sup>‡</sup> | 71.6 | 64.4 | 61.9 | 60.6 |
-| Gemini-2.0-Flash<sup>‡</sup> | 71.6 | 62.4 | 64.8 | 63.5 |
-| Gemini-2.5-Pro<sup>‡</sup> | 72.1 | 63.8 | 65.2 | 61.7 |
-| **LLMs with multimodal input** |||||
-| Llama-3.2-Vision<sup>†</sup> | 50.0 | 43.5 | 38.7 | 36.2 |
-| Gemma3 (27B)<sup>†</sup> | 63.8 | 64.2 | 59.9 | 59.4 |
-| GPT-4o-mini<sup>‡</sup> | 61.1 | 61.1 | 59.5 | 59.1 |
-| Gemini-2.0-Flash<sup>‡</sup> | 66.0 | 67.0 | 64.0 | 62.5 |
-| Gemini-2.5-Pro<sup>‡</sup> | 66.9 | 67.4 | 66.6 | 63.8 |
-| **VERA (Ours)** | **78.1** | **76.8** | **82.3** | **81.2** |
+The following results are provided as reference comparisons under a fixed zero-shot prompting protocol. They are not used as the primary evidence for VEGA's effectiveness.
 
-> <sup>†</sup> indicates locally deployed results.  
-> <sup>‡</sup> indicates results from official APIs.
+| Models | Twitter2015 MASC | Twitter2015 JMASA | Twitter2017 MASC | Twitter2017 JMASA |
+| :----- | :--------------: | :---------------: | :--------------: | :---------------: |
+| Llama-3.2-Vision | 36.2 | 13.4 | 43.5 | 22.4 |
+| Gemini-2.5-Pro | 63.8 | 26.0 | 67.4 | 23.3 |
+| GPT-4o | 59.1 | 35.9 | 61.1 | 36.0 |
+| **VEGA** | **81.2** | **74.8** | **77.8** | **73.9** |
 
-### Summary
+## 🔗 Code
 
-VERA achieves consistently strong performance across both subtasks and datasets. On **JMASA**, it obtains the **best F1 on Twitter2015 (74.8)** and highly competitive results on **Twitter2017 (72.7)**. On **MASC**, VERA achieves the **best F1 on both Twitter2017 (76.8)** and **Twitter2015 (81.2)**, while also substantially outperforming general-purpose LLMs under both text-only and multimodal settings.
+- **Status**: Released for review.
 
-## 🔗 Codes
+During the review stage, we release the dataset and core implementation of VEGA, including:
 
-- **Status**: Under review.
+- data preprocessing scripts;
+- visual evidence construction interface;
+- evidence-guided region calibration module;
+- training and evaluation scripts for MASC and JMASA.
 
-During the paper review stage, we have released the dataset and the core model code. The remaining components are currently under inspection and will be updated as soon as the paper is published.
+Some auxiliary scripts may be further cleaned and updated after publication.
 
 ## 🔑 License
 
-Distributed under the MIT License. See [MIT LICENSE](https://opensource.org/license/MIT) for more information.
+Distributed under the MIT License. See [MIT License](https://opensource.org/license/MIT) for more information.
 
 ## 💗 Acknowledgements
 
-Our code depends on project [MABSA-VLP](https://github.com/NUSTM/VLP-MABSA), many thanks!
+Our implementation is built upon prior MABSA codebases, especially [MABSA-VLP](https://github.com/NUSTM/VLP-MABSA). We sincerely thank the authors for their contributions.

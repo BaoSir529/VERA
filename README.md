@@ -1,5 +1,5 @@
 <h1 align="center">
-VEGA: Evidence-Guided Region Calibration for Multimodal Aspect-Based Sentiment Analysis
+Multimodal Aspect-Based Sentiment Analysis via Evidence-Guided Region Calibration
 </h1>
 
 <p align="center">
